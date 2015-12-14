@@ -1,0 +1,57 @@
+<!doctype HTML>
+<head>
+  <style>
+    .day {
+      width: 150px;
+      height: 150px;
+      background-color:grey;
+      display: inline-block;
+      text-align: center;
+      border-radius:3px;
+      margin: 2px;
+    }
+    .before {
+      background-color: green;
+    }
+    .before p {
+      color: black;
+    }
+    .after {
+      background-color: red;
+    }
+    .after p {
+      color: red;
+    }
+    .is-day {
+      background-color: lightgreen;
+    }
+    .is-day p {
+      color: lightgreen;
+    }
+  </style>
+</head>
+<body>
+<script src="https://code.jquery.com/jquery-git1.min.js"></script>
+<script>
+  var arrLyrics = 'Dashing through the snow, In a one horse open sleigh Over the fields we go Laughing all the way.bells on bob tail ring making spirits bright'.split(' ');
+
+  var $calander = $('<div id="calander"></div>')
+  var currentDay = new Date().getDate();
+  for (var i = 1; i < 26; i++) {
+    (function(i) {
+      var $day = $('<div class="day">' + i + '<br><p>' + arrLyrics[i - 1] + '</p></div>');
+      if (i < currentDay) $day.addClass('before');
+      if (i > currentDay) $day.addClass('after');
+      if (i === currentDay) {
+        $day.addClass('is-day');
+        $day.click(function() {
+          $day.removeClass('is-day');
+          $day.addClass('before');
+        });
+      }
+      $calander.append($day)
+    })(i);
+  }
+  $('body').append($calander)
+</script>
+</body>

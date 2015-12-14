@@ -1,0 +1,96 @@
+@font-face {
+    font-family: Aileron-bold;
+    src: url(fonts/Aileron-bold.otf);
+}
+
+@font-face {
+    font-family: Aileron-regular;
+    src: url(fonts/Aileron-Regular.otf);
+}
+@font-face {
+    font-family: Aileron-light;
+    src: url(fonts/Aileron-Light.otf);
+}
+
+body {
+  font-family: Aileron-regular;
+  margin: 0;
+  box-sizing: border-box;
+  background-color:red;
+  div {
+  color: green;
+  }
+}
+
+#sidebar {
+  position: fixed;
+  text-align: right;
+  top: 0;
+  bottom: 0;
+  background-color: #DFE4E7;
+  min-width: 20em;
+}
+
+.post {
+  padding-left: 2em;
+  padding-right: 2em;
+  padding-top: .2em;
+}
+
+h1 {
+  color: #011925;
+  font-family: Aileron-bold;
+  padding-right: .8em;
+}
+
+#social, #links {
+  padding-right: 1.6em;
+}
+#social span {
+  display: inline;
+}
+
+#main {
+  max-width: 50em;
+  position: relative;
+  margin-left:20em;
+}
+
+@media(max-width: 768px) {
+  #sidebar {
+    min-width: 15em;
+  }
+  #main {
+  margin-left:15em;
+  }
+}
+
+@media(max-width: 600px) {
+  #sidebar {
+    position:relative;
+    height:10em;
+    text-align: center;
+  }
+  #main {
+  margin-left:0;
+  }
+
+  #sidebar  li {
+    display: inline;
+  }
+
+  h1 {
+    padding-right: 0;
+  }
+
+  body {
+    font-size: 85%;
+  }
+}
+
+@media(min-width: 1200px) {
+  body {
+    background-color:;
+  }
+
+}

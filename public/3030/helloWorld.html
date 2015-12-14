@@ -1,0 +1,58 @@
+<!doctype HTML>
+<head>
+  <style>
+    body {
+         margin: 0;
+         padding: 0;
+         height: 100%;
+         width: 100%;
+       }
+
+       div {
+         margin:0;
+         padding: 0;
+         height: 10px;
+         width: 10px;
+         display: inline-block;
+         float:left;
+
+       }
+
+       h1 {
+         left: 45%;
+         top: 40%;
+         position: absolute;
+         font-size: 2em;
+       }
+  </style>
+</head>
+<body>
+  <h1>Hello World!</h1>
+  <script>
+  function randomColor() {
+    var letters = '0123456789ABCDEF'.split('');
+    var color = '#';
+    for (var i = 0; i < 6; i++) {
+      color += letters[Math.floor(Math.random() * 16)];
+    }
+    return color;
+  }
+
+  var area = Math.floor(window.innerHeight * window.innerWidth);
+  var boxNumber = area / 100;
+  console.log(boxNumber)
+  $allBoxes = $('body');
+  for (var i = 0; i < boxNumber; i++) {
+    $allBoxes.append('<div class="box"></div>')
+  }
+
+  function color() {
+    $('h1').css("color", randomColor())
+    $('div').each(function() {
+      $(this).css("background-color", randomColor())
+    })
+  }
+
+  window.setInterval(color, 50);
+  </script>
+</body>

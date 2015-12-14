@@ -1,0 +1,108 @@
+<!doctype HTML>
+<head>
+  <style>
+    .add-comment {
+      background-color: grey;
+      display:inline;
+    }
+
+    body {
+      margin:0;
+    }
+
+    img {
+      width: 500px;
+    }
+    h1 {
+      text-align: center;
+    }
+
+    #center-container {
+      margin: auto;
+      width: 500px;
+    }
+
+    .paragraph {
+      margin-top: 10px;
+    }
+
+    #num-par, #num-quotes {
+      display:block;
+      margin-bottom: 6px;
+      display:inline;
+    }
+
+    .describe-number {
+      display: inline;
+    }
+
+  </style>
+  <script src="https://code.jquery.com/jquery-1.11.3.min.js"></script>
+</head>
+<body>
+<div id="center-container">
+  <h1 id="title">Arnie Ipsum</h1>
+  <img src="http://static.gamesradar.com/images/totalfilm/a/arnold-schwarzenegger-will-return-as-conan-119362-470-75.jpg" alt="">
+  <form>
+    <select id="num-par" onChange="renderDOM()"></select>
+    <div class="describe-number">Number of paragraphs</div> <br>
+    <select id="num-quotes" onChange="renderDOM()"></select>
+    <div class="describe-number">Number of quotes per paragraph</div>
+  </form>
+  <div id="ipsum-container"></div>
+</div>
+  <script src="quotesArr.js"></script>
+  <script>
+
+  var numPar = document.getElementById('num-par');
+  var numQuotes = document.getElementById('num-quotes');
+  // make options 1-20
+  for (var i = 0; i < 20; i++) {
+    var numListElem = document.createElement('option');
+    var numListElem2 = document.createElement('option');
+    numListElem.innerHTML = i;
+    numListElem2.innerHTML = i;
+    numListElem.value = i;
+    numListElem2.value = i;
+    numPar.appendChild(numListElem);
+    numQuotes.appendChild(numListElem2);
+  }
+  // set default values
+  numPar.options[3].selected = true;
+  numQuotes.options[9].selected = true;
+
+  function renderDOM() {
+    printParagraphs(numPar.options[numPar.selectedIndex].value, numQuotes.options[numQuotes.selectedIndex].value);
+  }
+
+  // get dom elements
+  var ipsumContainer = document.getElementById('ipsum-container');
+
+  function makeParagraph(numQuotes) {
+    var returnStr = '';
+    for (var i = 0; i < numQuotes; i++) {
+      var randoIndex = Math.floor(Math.random() * allQuotes.length);
+      returnStr += allQuotes[randoIndex] + ' ';
+    }
+    return returnStr;
+  }
+
+  function printParagraphs(numPars, numQuotes) {
+    // first clear
+    ipsumContainer.innerHTML = '';
+    for (var i = 0; i < numPars; i++) {
+      var paragraph = document.createElement('div')
+      paragraph.className = 'paragraph';
+      paragraph.innerHTML = makeParagraph(numQuotes);
+      ipsumContainer.appendChild(paragraph);
+    }
+  }
+
+  printParagraphs(3, 9)
+
+  </script>
+</body>
+
+
+
+
