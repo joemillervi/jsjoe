@@ -22,7 +22,7 @@ gulp.task('server', function() {
 // minification of JS CSS HTML
 gulp.task('minifyScripts', function() {
   gulp.src('app/js/*.js')
-  .pipe(uglify())
+//  .pipe(uglify())
   .pipe(rename({suffix: '.min'}))
   .pipe(gulp.dest('public/'));
 })

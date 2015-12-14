@@ -10,7 +10,7 @@ app.use('/assets', express.static(__dirname + '/public'))
 
 // listen for specific blog pages..
 app.use('/', function(req, res, next) {
-  console.log('request url', req.url)
+  console.log('request url:', req.url)
   next();
 })
 
@@ -19,6 +19,12 @@ app.get('/', function(req, res) {
   res.sendFile(path.join(__dirname + '/public/index.html'));
 });
 
+app.get('/blog', function(req, res) {
+  console.log('res', req.url)
+  res.json()
+})
+
+// json example
 app.get('/api', function(req, res) {
   res.json({ firstname: 'john'})
 })

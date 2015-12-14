@@ -4,6 +4,11 @@
 }
 
 @font-face {
+    font-family: adam;
+    src: url(fonts/ADAM.otf);
+}
+
+@font-face {
     font-family: Aileron-regular;
     src: url(fonts/Aileron-Regular.otf);
 }
@@ -12,14 +17,43 @@
     src: url(fonts/Aileron-Light.otf);
 }
 
+
 body {
   font-family: Aileron-regular;
   margin: 0;
   box-sizing: border-box;
-  background-color:red;
-  div {
-  color: green;
-  }
+}
+
+h1 {
+  color: #FDFDFD;
+  font-family: adam;
+  padding-right: .8em;
+}
+
+a {
+  text-decoration: none;
+  color: #1D1D1D;
+}
+
+a:link {
+  color: blue;
+  font-family: adam;
+}
+
+a:visited {
+  color: #FDFDFD;
+}
+
+a:hover {
+  color: red;
+}
+
+ul {
+    list-style-type: none;
+}
+
+.fa {
+  color: #71B759;
 }
 
 #sidebar {
@@ -27,40 +61,56 @@ body {
   text-align: right;
   top: 0;
   bottom: 0;
-  background-color: #DFE4E7;
+  background-color: #15151D;
   min-width: 20em;
+  padding-top:.5em;
+}
+
+#post-list {
+  max-width: 54em;
+  position: relative;
+  margin-left:20em;
+  background-color: #FDFDFD;
+}
+
+#main {
+  background-color: #DFE4E7;
 }
 
 .post {
   padding-left: 2em;
   padding-right: 2em;
-  padding-top: .2em;
+  padding-top: 2em;
+  padding-bottom: 2em;
+  max-width:48em;
 }
 
-h1 {
-  color: #011925;
-  font-family: Aileron-bold;
-  padding-right: .8em;
+.post h2 {
+  display: inline;
+}
+
+.date {
+  display: inline-block;
+  float: right;
+}
+
+.content {
+  margin-top: 1em;
 }
 
 #social, #links {
   padding-right: 1.6em;
 }
-#social span {
-  display: inline;
-}
 
-#main {
-  max-width: 50em;
-  position: relative;
-  margin-left:20em;
+#social a, span {
+  display: inline;
 }
 
 @media(max-width: 768px) {
   #sidebar {
     min-width: 15em;
   }
-  #main {
+  #post-list {
   margin-left:15em;
   }
 }
@@ -71,7 +121,7 @@ h1 {
     height:10em;
     text-align: center;
   }
-  #main {
+  #post-list {
   margin-left:0;
   }
 
