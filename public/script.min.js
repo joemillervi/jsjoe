@@ -11,8 +11,24 @@ window.addEventListener('hashchange', function() {
 });
 
 function loadBlogPage(num) {
+  $postList.innerHTML = '';
   num = Number(num || 0);
-  // Ajax request to server get next 4 posts starting with index num
+  httpGetAsync('blogIndex/' + num, function(data) {
+    var data = JSON.parse(data);
+    data.forEach(function(htmlStr) {
+      $postList.innerHTML += htmlStr;
+    });
+  });
+}
+
+function httpGetAsync(theUrl, callback) {
+    var xmlHttp = new XMLHttpRequest();
+    xmlHttp.onreadystatechange = function() {
+        if (xmlHttp.readyState == 4 && xmlHttp.status == 200)
+            callback(xmlHttp.responseText);
+    }
+    xmlHttp.open("GET", theUrl, true); // true for asynchronous
+    xmlHttp.send(null);
 }
 
 function loadAboutPage() {
