@@ -22,6 +22,7 @@ body {
   font-family: Aileron-regular;
   margin: 0;
   box-sizing: border-box;
+  background-color: #DFE4E7;
 }
 
 h1 {
@@ -48,6 +49,10 @@ a:hover {
   color: red;
 }
 
+.go-to-post a:visited {
+  color:black;
+}
+
 ul {
     list-style-type: none;
 }
@@ -71,10 +76,12 @@ ul {
   position: relative;
   margin-left:20em;
   background-color: #FDFDFD;
+  min-height: 100%;
 }
 
 #main {
   background-color: #DFE4E7;
+
 }
 
 .post {
@@ -98,6 +105,10 @@ ul {
   margin-top: 1em;
 }
 
+
+.go-to-post {
+
+}
 #social, #links {
   padding-right: 1.6em;
 }

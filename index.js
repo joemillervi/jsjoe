@@ -5,29 +5,40 @@ var path = require('path');
 
 var port = process.env.PORT || 3000;
 
-// listen for static file requests
-app.use('/assets', express.static(__dirname + '/public'))
-
-// listen for specific blog page requests and send back array of blogs as html string
-app.get(/blogIndex/, function(req, res, next) {
-  console.log('request url:', req.url)
-  res.send(returnPosts(Number(req.url.slice(11)), 2)); // SET NUMBER OF POSTS GIVEN BACK HERE
-})
-
 // load index.html
 app.get('/', function(req, res) {
   res.sendFile(path.join(__dirname + '/public/index.html'));
 });
 
-// return an array of posts starting at a given index. length specified by count
+// listen for static file requests
+app.use('/assets', express.static(__dirname + '/public'))
+
+// listen for specific blog page requests and send back array of blogs as html string
+app.get(/blogIndex/, function(req, res, next) {
+  console.log('blogIndex:', req.url);
+  res.send(returnPosts(Number(req.url.slice(11)), 4)); // SET NUMBER OF POSTS GIVEN BACK HERE
+})
+
+// listen for a request for a specific blog page
+app.get(/fetchBlog/, function(req, res, next) {
+  console.log('fetchBlog:', req.url);
+  res.send(returnPost(Number(req.url.slice(11))))
+})
+
+// return an object of posts starting at a given index. length specified by count
 function returnPosts(firstPostIndex, count) {
-  var posts = [];
+  var posts = {};
   for (var i = firstPostIndex; i < firstPostIndex + count; i++) {
     var path = __dirname + '/app/blogPosts/' + i + '.html';
-    if (fileExists(path)) posts.push(fs.readFileSync(path, 'utf8'));
+    if (fileExists(path)) posts[i] = fs.readFileSync(path, 'utf8');
   }
-  console.log(posts)
   return JSON.stringify(posts)
+}
+
+// return string of single blog post
+function returnPost(i) {
+  var path = __dirname + '/app/blogPosts/' + i + '.html';
+  if (fileExists(path)) return fs.readFileSync(path, 'utf8');
 }
 
 // check if file exists
