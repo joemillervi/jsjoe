@@ -25,6 +25,11 @@ app.get(/fetchBlog/, function(req, res, next) {
   res.send(returnPost(Number(req.url.slice(11))))
 })
 
+// listen for about, computer and music page requests
+app.get(/static/, function(req, res, next) {
+  res.send(returnPublicHtmlFile(req.url.slice(8)));
+})
+
 // return an object of posts starting at a given index. length specified by count
 function returnPosts(firstPostIndex, count) {
   var posts = {};
@@ -38,6 +43,13 @@ function returnPosts(firstPostIndex, count) {
 // return string of single blog post
 function returnPost(i) {
   var path = __dirname + '/app/blogPosts/' + i + '.html';
+  if (fileExists(path)) return fs.readFileSync(path, 'utf8');
+}
+
+// used to return music, computer and about pages
+function returnPublicHtmlFile(name) {
+  console.log('return public html file requested: ', name);
+  var path = __dirname + '/public/' + name + '.html';
   if (fileExists(path)) return fs.readFileSync(path, 'utf8');
 }
 

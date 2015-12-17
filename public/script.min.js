@@ -10,9 +10,9 @@ function applyRoutes() {
   if (window.location.hash === '') loadBlogPage();
   if (hashUrl.indexOf('#blog') > -1) loadBlogPage(hashUrl.slice(5));
   if (hashUrl.indexOf('#blogPost') > -1) loadFullPost(hashUrl.slice(9));
-  if (window.location.hash === '#about') loadAboutPage();
- // if (window.location.hash === '#computerProjects') loadComputerProjects();
-  // if (window.location.hash === '#musicProjects') loadMusicProjects();
+  if (window.location.hash === '#about') loadStaticPage('static/about');
+  if (window.location.hash === '#computer') loadStaticPage('static/computer');
+  if (window.location.hash === '#music') loadStaticPage('static/music');
 }
 
 // listen for url changes
@@ -63,11 +63,11 @@ function makeShowPostButton(postIndex) {
   return '<div class="go-to-post"><a href="#blogPost' + postIndex + '">Continue reading..</a></div>';
 }
 
-function loadAboutPage() {
-  $postList.innerHTML = '';
-  var $title = document.createElement('h1');
-  $title.innerHTML = 'Hello';
-  $postList.appendChild($title)
+function loadStaticPage(str) {
+  httpGetAsync(str, function(data) {
+    console.log(data)
+    $postList.innerHTML = data;
+  });
 }
 
 // on initial page load, update page with requested url
