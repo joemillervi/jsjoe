@@ -1,0 +1,251 @@
+<!doctype HTML>
+<head>
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
+  <style>
+
+
+  @font-face {
+      font-family: Arkhip;
+      src: url(Arkhip_font.otf);
+  }
+    body {
+      margin: 0;
+      padding: 0;
+      height: 100%;
+      width: 100%;
+      background-color: #EAE7DA;
+      font-family: Arkhip;
+    }
+
+    a {
+      color: #0A0F12;
+      text-decoration: none; /* no underline */
+    }
+
+    #watch-wrapper {
+      position: fixed; /* or absolute */
+      top: 50%;
+      left: 50%;
+      height: 100px;
+      width: 300px;
+      margin-top: -50px;
+      margin-left: -150px;
+      background-color: #0A0F12;
+      border-radius: 3px;
+      color: #5B0AFF;
+    }
+
+    #time-display {
+      position: relative;
+      top: .6em;
+      margin-left: .4em;
+      width: 100px;
+      font-size: 3em;
+      display: inline;
+    }
+
+    #ms-display {
+      position: relative;
+      top: 1.7em;
+      display: inline;
+    }
+
+    #options, #controls {
+      position: fixed; /* or absolute */
+      top: 50%;
+      left: 50%;
+      height: 100px;
+      width: 300px;
+      margin-top: 70px;
+      margin-left: -150px;
+    }
+
+    #controls {
+      margin-left: 84px;
+      margin-top: 65px;
+    }
+
+    #clock, #stop-watch {
+      width: 150px
+    }
+
+    #line {
+      width: 150px;
+      border: solid black thin;
+      position: relative;
+      bottom: 4px;
+    }
+    #play {
+      background-color:red;
+    }
+
+    .btn {
+      width: 50px;
+      height: 50px;
+      color:blue;
+    }
+/**/
+    .slide-up {
+      animation: slideup .07s;
+      animation-fill-mode: forwards;
+    }
+
+    @keyframes slideup {
+        0% {
+            -webkit-transform: translate3d(0px, 0px, 0px);
+            animation-timing-function: ease-out;
+        }
+        100% {
+            -webkit-transform: translate3d(0px, 22px, 0px);
+        }
+    }
+
+    .slide-down {
+      animation: slidedown .07s;
+      animation-fill-mode: forwards;
+    }
+
+    .fa {
+      transition-duration: 1000ms;
+    }
+
+    @keyframes slidedown {
+        0% {
+            -webkit-transform: translate3d(0px, 22px, 0px);
+            animation-timing-function: ease-out;
+        }
+        100% {
+            -webkit-transform: translate3d(0px, 0px, 0px);
+        }
+    }
+  </style>
+</head>
+<body>
+  <div id="watch-wrapper">
+    <div id="time-display">12:45</div>
+    <div id="ms-display">00</div>
+  </div>
+  <div id="controls">
+    <div id="play"><i id="play" class="fa btn fa-play"></i></div>
+    <div id="pause"><i id="pause" class="fa btn fa-pause"></i></div>
+    <div id="stop"><i id="stop" class="fa btn fa-stop"></i></div>
+  </div>
+  <div id="options">
+    <div id="clock"><a href="#">clock</a></div>
+    <div id="line" ></div>
+    <div id="stop-watch"><a href="#">stopwatch</a></div>
+  </div>
+
+  <script>
+    // elements
+    var $line = document.getElementById('line');
+    var $timeDisplay = document.getElementById('time-display');
+    var $msDisplay = document.getElementById('ms-display');
+    var $clock = document.getElementById('clock');
+    var $stopWatch = document.getElementById('stop-watch');
+    var $controls = document.getElementById('controls');
+    var $playBtn = document.getElementById('play');
+    var $pauseBtn = document.getElementById('pause');
+    var $stopBtn = document.getElementById('stop');
+
+    // global vars
+    var UI = {};
+    UI.stopWatchTime = '00:00';
+    UI.stopWatchMSTime = '00';
+    UI.status = 'clock';
+    UI.playStatus = 'stopped'; // possible states: stopped, playing, paused
+    UI.stopWatchStartTime;
+    UI.pausedTime;
+
+    // button event listeners alter current UI state to affect loop
+    $clock.addEventListener('click', function() {
+      UI.status = 'clock';
+      changeLineTo('down');
+    });
+
+    $stopWatch.addEventListener('click', function() {
+      UI.status = 'stopWatch';
+      changeLineTo('up');
+    });
+
+    $playBtn.addEventListener('click', function() {
+      UI.playStatus = 'playing';
+      UI.stopWatchStartTime = new Date().getTime();
+    });
+
+    $pauseBtn.addEventListener('click', function() {
+      console.log('paused')
+      UI.playStatus = 'paused';
+      UI.pausedTime = new Date().getTime();
+    });
+
+    $stopBtn.addEventListener('click', function() {
+      UI.playStatus = 'stopped';
+    })
+
+    // mega function to deal with each iteration
+    function updateClock() {
+      var currentTime = new Date();
+      if (UI.status === 'clock') {
+        $timeDisplay.innerHTML = currentTime.getHours() + ':' + currentTime.getMinutes();
+        $msDisplay.innerHTML = currentTime.getSeconds();
+      }
+      if (UI.playStatus === 'playing') {
+        UI.stopWatchTime = new Date(currentTime - UI.stopWatchStartTime);
+      }
+      if (UI.playStatus === 'stopped') {
+        UI.stopWatchTime = '00:00';
+        UI.stopWatchMSTime = '00';
+      }
+      if (UI.playStatus === 'paused') {
+        UI.stopWatchTime = new Date(UI.pausedTime - UI.stopWatchStartTime)
+      }
+      if (UI.status === 'stopWatch') {
+        // update UI ONLY
+        console.log(UI.stopWatchTime)
+        if (UI.playStatus !== 'stopped') {
+          $timeDisplay.innerHTML = UI.stopWatchTime.getMinutes() + ':' + UI.stopWatchTime.getSeconds();
+          $msDisplay.innerHTML = UI.stopWatchTime.getMilliseconds();
+        }
+        else {
+          $timeDisplay.innerHTML = '00:00';
+          $msDisplay.innerHTML = '00';
+        }
+      }
+    }
+
+    // // the stopwatch loop
+    // function stopWatchLoop() {
+    //   if (UI.playStatus === 'playing') {
+    //     var currentTime = new Date().getTime();
+    //     UI.stopWatchTime = new Date(currentTime - stopWatchStartTime);
+    //     if (UI.status === 'stopWatch')  {
+
+    //     }
+    //   }
+    //   if (UI.playStatus === 'paused') {
+    //     $timeDisplay.innerHTML = UI.stopWatchTime.getMinutes() + ':' + UI.stopWatchTime.getSeconds();
+    //     $msDisplay.innerHTML = UI.stopWatchTime.getMilliseconds();
+    //   }
+    //   if (UI.playStatus === 'stopped') {
+    //     $timeDisplay.innerHTML = '00:00';
+    //     $msDisplay.innerHTML = '00';
+    //   }
+    // }
+
+    // UI - change classes of underline to match status
+    function changeLineTo(status) {
+      if (status === 'down') {
+        $line.classList.remove('slide-up')
+        $line.classList.add('slide-down')
+      }
+      if (status === 'up') {
+        $line.classList.remove('slide-down')
+        $line.classList.add('slide-up')
+      }
+    }
+
+    // initialize main loop
+    window.setInterval(updateClock, 10);
+  </script>
+</body>

@@ -17,7 +17,6 @@
     src: url(fonts/Aileron-Light.otf);
 }
 
-
 body {
   font-family: Aileron-regular;
   margin: 0;
@@ -37,7 +36,7 @@ a {
 }
 
 a:link {
-  color: blue;
+  color: white;
   font-family: adam;
 }
 
@@ -47,14 +46,6 @@ a:visited {
 
 a:hover {
   color: red;
-}
-
-.go-to-post a:visited {
-  color:black;
-}
-
-.go-to-post {
-  
 }
 
 ul {
@@ -91,8 +82,8 @@ ul {
 .post {
   padding-left: 2em;
   padding-right: 2em;
-  padding-top: 2em;
-  padding-bottom: 2em;
+  padding-top: 1.9em;
+  padding-bottom: 1em;
   max-width:48em;
 }
 
@@ -109,10 +100,25 @@ ul {
   margin-top: 1em;
 }
 
+.go-to-post a:visited {
+  color: #75C0ED;
+}
 
 .go-to-post {
-
+  padding-bottom: .3em;
+  border-bottom: thin solid black;
+  text-align: center;
+  color:#75C0ED;
 }
+
+.go-to-post a {
+  color: #75C0ED;
+}
+
+.go-to-post a:hover {
+  color: red;
+}
+
 #social, #links {
   padding-right: 1.6em;
 }
