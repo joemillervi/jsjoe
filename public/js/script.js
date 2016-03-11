@@ -6,6 +6,7 @@ var $postList = document.getElementById('post-list');
 
 // define route actions
 function applyRoutes() {
+  console.log('routes')
   var hashUrl = window.location.hash;
   if (window.location.hash === '') loadBlogPage();
   if (hashUrl.indexOf('#blog') > -1) loadBlogPage(hashUrl.slice(5));
@@ -44,7 +45,7 @@ function loadFullPost(index) {
     });
   }
   function printFullPost(data) {
-    $postList.innerHTML = data;
+    insertAndExecute('post-list', data)
   }
 }
 
@@ -60,7 +61,7 @@ function httpGetAsync(theUrl, callback) {
 }
 
 function makeShowPostButton(postIndex) {
-  return '<div class="go-to-post"><a href="#blogPost' + postIndex + '">Continue reading..</a></div>';
+  return '<div class="go-to-post"><a href="#blogPost' + postIndex + '">Continue reading..</a></div><span class="disqus-comment-count" data-disqus-identifier="'+postIndex+'">First article</span>';
 }
 
 function loadStaticPage(str) {
@@ -70,5 +71,19 @@ function loadStaticPage(str) {
   });
 }
 
+function insertAndExecute(id, text) {
+    document.getElementById(id).innerHTML = text;
+    var scripts = Array.prototype.slice.call(document.getElementById(id).getElementsByTagName("script"));
+    for (var i = 0; i < scripts.length; i++) {
+        if (scripts[i].src != "") {
+            var tag = document.createElement("script");
+            tag.src = scripts[i].src;
+            document.getElementsByTagName("head")[0].appendChild(tag);
+        }
+        else {
+            eval(scripts[i].innerHTML);
+        }
+    }
+}
 // on initial page load, update page with requested url
 applyRoutes()
